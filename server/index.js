@@ -1,28 +1,11 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
-
-var cors = require("cors");
-
+const cors = require("cors");
 app.use(cors());
 
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "",
-  database: "publications",
-});
+// routes
+app.get("/", require("./routes/publications"));
 
-app.get("/getData", (req, res) => {
-  db.query("SELECT * FROM studentpublications", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-app.listen(3001, (req, res) => {
+app.listen(3001, async () => {
   console.log("Server started");
 });
